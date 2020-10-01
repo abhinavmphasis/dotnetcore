@@ -8,9 +8,19 @@ namespace bookslib.Controllers
 {
     public class HomeController : Controller
     {
-        public string Index()
+        public ViewResult Index()
         {
-            return "Welcome to the book land";
+            return View();
+        }
+
+        public ViewResult AboutUS()
+        {
+            return View();
+        }
+
+        public ViewResult ContactUS()
+        {
+            return View();
         }
     }
 }

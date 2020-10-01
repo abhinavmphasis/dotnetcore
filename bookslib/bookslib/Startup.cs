@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 
 namespace bookslib
@@ -26,16 +28,12 @@ namespace bookslib
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles();
+          
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.Map("/", async context =>
-                //{
-                //    await context.Response.WriteAsync("Hello World");
-                //});
-
-                // add the controller to the routing module 
                 endpoints.MapDefaultControllerRoute();
             });
     
