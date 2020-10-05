@@ -1,5 +1,7 @@
-﻿@using bookslib.Models;
-@model BookModel; 
+﻿@{
+    ViewData["Title"] = "Book Detail" + Model.Title;
+}
+@model BookModel;
 
 <div class="container">
     <h3 class="display-4">Book Detail</h3>
@@ -47,47 +49,48 @@
             </div>
             <div class="row">
                 <div class="col-md-12 text-primary">
-                    <p class="description">@Model.Description
-                    </p>
-                </div>
+                    <p class="description">
+                        @Model.Description
+                </p>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <button class="btn btn-outline-primary">Read Now</button>
-                </div>
-            </div>
-            <hr/>
-            <ul class="list-group">
-                <li class="list-group-item"><span class="font-weight-bold">Category -</span> @Model.Category</li>
-                <li class="list-group-item"><span class="font-weight-bold">Total Pages -</span> @Model.TotalPages</li>
-                <li class="list-group-item"><span class="font-weight-bold">Language -</span> @Model.Language</li>
-
-            </ul>
         </div>
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-outline-primary">Read Now</button>
+            </div>
+        </div>
+        <hr />
+        <ul class="list-group">
+            <li class="list-group-item"><span class="font-weight-bold">Category -</span> @Model.Category</li>
+            <li class="list-group-item"><span class="font-weight-bold">Total Pages -</span> @Model.TotalPages</li>
+            <li class="list-group-item"><span class="font-weight-bold">Language -</span> @Model.Language</li>
+
+        </ul>
     </div>
-    <hr />
-    <div class="py-5 bg-light">
-        <h3 class="h3">Similar Books</h3>
-        <div class="row>">
-            @for (int i = 0; i < 5; i++)
-            {
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                        <div class="card-body">
-                            <h3 class="card-title">book.Title</h3>
-                            <p class="card-text">book.Description</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a href="#" class="btn btn-sm btn-outline-secondary">View Details</a>
-                                </div>
-                                <small class="text-muted">book.Author</small>
+</div>
+<hr />
+<div class="py-5 bg-light" >
+    <h3 class="h3">Similar Books</h3>
+    <div class="row>">
+        @for (int i = 0; i < 5; i++)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                    <div class="card-body">
+                        <h3 class="card-title">book.Title</h3>
+                        <p class="card-text">book.Description</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-sm btn-outline-secondary">View Details</a>
                             </div>
+                            <small class="text-muted">book.Author</small>
                         </div>
                     </div>
                 </div>
-            }
+            </div>
+        }
 
-        </div>
     </div>
+</div>
 </div>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width" />
     <link href="~/css/Site.css" rel="stylesheet" />
     <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <title>Book Store Application</title>
+    <title>@ViewData["Title"] | Book Store Application</title>
 </head>
 <body>
     <header>
@@ -22,16 +22,19 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/">Home </a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/home/aboutus">About us</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="AboutUs">About us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/home/contactus">Contact us</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="ContactUS">Contact us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/book/getallbooks">All Books</a>
+                        <a class="nav-link" asp-controller="book" asp-action="getallbooks">All Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-protocol="http" asp-host="lib.com" asp-controller="Book" asp-action="GetAllBooks">New Link</a>
                     </li>
 
                 </ul>

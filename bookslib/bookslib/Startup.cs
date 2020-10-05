@@ -40,7 +40,14 @@ namespace bookslib
             {
                 endpoints.MapDefaultControllerRoute();
             });
-    
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute(
+            //        name: "Default",
+            //        pattern: "bookApp/{controller=Home}/{action=Index}/{id?}");
+            //});
+
         }
     }
 }
