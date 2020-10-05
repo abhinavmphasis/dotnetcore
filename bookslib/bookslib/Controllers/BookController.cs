@@ -34,5 +34,15 @@ namespace bookslib.Controllers
         {
             return _bookRepository.SearchBooks(bookName, authorName);
         }
+
+        public ViewResult AddNewBook()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ViewResult AddNewBook(BookModel bookModel) 
+        {
+            return View();
+        }
     }
 }
