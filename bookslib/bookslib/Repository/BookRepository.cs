@@ -1,8 +1,11 @@
 ﻿using bookslib.Data;
 using bookslib.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 
 namespace bookslib.Repository
@@ -22,7 +25,7 @@ namespace bookslib.Repository
                 CreatedOn = DateTime.UtcNow,
                 Description = model.Description,
                 Title=model.Title,
-                TotalPages=model.TotalPages,
+                TotalPages=model.TotalPages.HasValue?model.TotalPages.Value:0,
                 UpdatedOn=DateTime.UtcNow
 
         };
@@ -31,14 +34,50 @@ namespace bookslib.Repository
             return newBook.Id;
 
         }
-        public List<BookModel> GetAllBooks()
+        public async Task<List<BookModel>> GetAllBooks()
         {
-            return DataSource();
+            var books = new List<BookModel>();
+            var allbooks = await _context.Books.ToListAsync();
+            if (allbooks?.Any() == true)
+            {
+                foreach(var book in allbooks)
+                {
+                    books.Add(new BookModel()
+                    {
+                        Author = book.Author,
+                        Category = book.Category,
+                        Description = book.Description,
+                        Id = book.Id,
+                        Language = book.Language,
+                        Title = book.Title,
+                        TotalPages = book.TotalPages
+                    });
+                }
+            }
+            return books;
         }
 
-        public BookModel GetBookById(int id)
+        public async Task<BookModel> GetBookById(int id)
         {
-            return DataSource().Where(x => x.Id == id).FirstOrDefault();
+            var book = await _context.Books.FindAsync(id);
+
+            if (book!= null)
+            {
+                var bookdetails = new BookModel()
+                {
+                    Author = book.Author,
+                    Category = book.Category,
+                    Description = book.Description,
+                    Id = book.Id,
+                    Language = book.Language,
+                    Title = book.Title,
+                    TotalPages = book.TotalPages
+                };
+                return bookdetails;
+
+            }
+            return null;
+            //return DataSource().Where(x => x.Id == id).FirstOrDefault();
         }
 
         public List<BookModel> SearchBooks(string title, string author)
@@ -53,9 +92,7 @@ namespace bookslib.Repository
                 new BookModel(){Id= 1, Title="MVC", Author="Abhinav", Description="This is MVC5 version book", Category="Architecture", Language="English",TotalPages=134},
                 new BookModel(){Id= 2, Title="PHP", Author="Abhishek", Description="This is PHP version book",Category="Programming", Language="English",TotalPages=1200},
                 new BookModel(){Id= 3, Title="Angular", Author="Nitin", Description="This is Angular 8 version book",Category="Client side code", Language="English",TotalPages=200},
-                new BookModel(){Id= 4, Title="Azure", Author="Jatin", Description="This is Azure server book",Category="Cloud database", Language="English",TotalPages=500},
-                new BookModel(){Id= 5, Title="MS Sql Server", Author="Sam", Description="This is migration  book",Category="Database code", Language="English",TotalPages=700},
-                new BookModel(){Id= 6, Title="Full Stack", Author="Nitish", Description="The all code trip",Category="Cloud database", Language="English",TotalPages=900},
+              
             };
         }
     }
