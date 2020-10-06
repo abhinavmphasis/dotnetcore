@@ -14,7 +14,7 @@ namespace bookslib.Repository
         {
             _context = context;
         }
-        public int AddNewBook(BookModel model)
+        public async Task<int> AddNewBook(BookModel model)
         {
             var newBook = new Books()
             {
@@ -27,7 +27,7 @@ namespace bookslib.Repository
 
         };
             _context.Books.Add(newBook);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return newBook.Id;
 
         }
