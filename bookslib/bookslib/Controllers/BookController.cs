@@ -35,14 +35,20 @@ namespace bookslib.Controllers
             return _bookRepository.SearchBooks(bookName, authorName);
         }
 
-        public ViewResult AddNewBook()
+        public ViewResult AddNewBook(bool isSuccees, int bookId = 0)
         {
+            ViewBag.IsSuccees = isSuccees;
+            ViewBag.BookId = bookId;
             return View();
         }
         [HttpPost]
-        public ViewResult AddNewBook(BookModel bookModel) 
+        public IActionResult AddNewBook(BookModel bookModel) 
         {
-            _bookRepository.AddNewBook(bookModel);
+           int id = _bookRepository.AddNewBook(bookModel);
+            if (id > 0)
+            {
+                return RedirectToAction(nameof(AddNewBook), new { isSuccees = true, bookId = id });
+            }
             return View();
         }
     }
