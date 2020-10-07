@@ -40,9 +40,9 @@ namespace bookslib.Controllers
         {
             var model = new BookModel()
             {
-                Language = "English"
+                Language = "2"
             };
-            ViewBag.Language = new SelectList( new List<string>() { "Hindi", "English", "Dutch" });
+            ViewBag.Language = new SelectList(GetLanguage(),"Id", "Text");
             ViewBag.IsSuccees = isSuccees;
             ViewBag.BookId = bookId;
             return View(model);
@@ -58,12 +58,18 @@ namespace bookslib.Controllers
                     return RedirectToAction(nameof(AddNewBook), new { isSuccees = true, bookId = id });
                 }
             }
-            ViewBag.Language = new SelectList(new List<string>() { "Hindi", "English", "Dutch" });
+            ViewBag.Language = new SelectList(GetLanguage(), "Id", "Text");
 
-            //ViewBag.IsSuccees = false;
-            //ViewBag.BookId = 0;
-            ModelState.AddModelError("", "This is my custom error message");
             return View();
+        }
+        private List<LanguageModel> GetLanguage()
+        {
+            return new List<LanguageModel>()
+            {
+                new LanguageModel(){Id=1, Text="Hindi"},
+                new LanguageModel(){Id=2, Text="English"},
+                new LanguageModel(){Id=1, Text="Dutch"},
+            };
         }
     }
 }
