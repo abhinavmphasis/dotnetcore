@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using bookslib.Models;
 using bookslib.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace bookslib.Controllers
 {
@@ -41,6 +42,7 @@ namespace bookslib.Controllers
             {
                 Language = "English"
             };
+            ViewBag.Language = new SelectList( new List<string>() { "Hindi", "English", "Dutch" });
             ViewBag.IsSuccees = isSuccees;
             ViewBag.BookId = bookId;
             return View(model);
@@ -56,6 +58,8 @@ namespace bookslib.Controllers
                     return RedirectToAction(nameof(AddNewBook), new { isSuccees = true, bookId = id });
                 }
             }
+            ViewBag.Language = new SelectList(new List<string>() { "Hindi", "English", "Dutch" });
+
             //ViewBag.IsSuccees = false;
             //ViewBag.BookId = 0;
             ModelState.AddModelError("", "This is my custom error message");
