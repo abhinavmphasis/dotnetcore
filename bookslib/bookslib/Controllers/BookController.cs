@@ -37,9 +37,13 @@ namespace bookslib.Controllers
 
         public ViewResult AddNewBook(bool isSuccees, int bookId = 0)
         {
+            var model = new BookModel()
+            {
+                Language = "English"
+            };
             ViewBag.IsSuccees = isSuccees;
             ViewBag.BookId = bookId;
-            return View();
+            return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> AddNewBook(BookModel bookModel) 
