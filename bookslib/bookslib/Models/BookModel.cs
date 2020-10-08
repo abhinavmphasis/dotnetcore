@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using bookslib.Enums;
 
 namespace bookslib.Models
 {
@@ -22,9 +23,11 @@ namespace bookslib.Models
         public string Description { get; set; }
         public string Category { get; set; }
         [Required(ErrorMessage = "Please enter the language of your choice")]
-        public string Language { get; set; }
+
+        public int LanguageId { get; set; }
+       
         [Required(ErrorMessage = "Please enter the total pages of the book")]
         [Display(Name ="Total Pages of book")]
-        public int? TotalPages { get; set; }
+        public int? TotalPages { get; set; }    
     }
 }

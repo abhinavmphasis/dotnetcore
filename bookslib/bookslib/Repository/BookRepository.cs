@@ -25,7 +25,7 @@ namespace bookslib.Repository
                 CreatedOn = DateTime.UtcNow,
                 Description = model.Description,
                 Title=model.Title,
-                Language=model.Language,
+                LanguageId=model.LanguageId,
                 TotalPages=model.TotalPages.HasValue?model.TotalPages.Value:0,
                 UpdatedOn=DateTime.UtcNow
 
@@ -49,7 +49,7 @@ namespace bookslib.Repository
                         Category = book.Category,
                         Description = book.Description,
                         Id = book.Id,
-                        Language = book.Language,
+                        LanguageId = book.LanguageId,
                         Title = book.Title,
                         TotalPages = book.TotalPages
                     });
@@ -70,7 +70,7 @@ namespace bookslib.Repository
                     Category = book.Category,
                     Description = book.Description,
                     Id = book.Id,
-                    Language = book.Language,
+                    LanguageId = book.LanguageId,
                     Title = book.Title,
                     TotalPages = book.TotalPages
                 };
@@ -83,18 +83,9 @@ namespace bookslib.Repository
 
         public List<BookModel> SearchBooks(string title, string author)
         {
-            return DataSource().Where(x => x.Title.Contains(title) || x.Author.Contains(author)).ToList();
+            return null;
         }
 
-        private List<BookModel> DataSource()
-        {
-            return new List<BookModel>()
-            {
-                new BookModel(){Id= 1, Title="MVC", Author="Abhinav", Description="This is MVC5 version book", Category="Architecture", Language="English",TotalPages=134},
-                new BookModel(){Id= 2, Title="PHP", Author="Abhishek", Description="This is PHP version book",Category="Programming", Language="English",TotalPages=1200},
-                new BookModel(){Id= 3, Title="Angular", Author="Nitin", Description="This is Angular 8 version book",Category="Client side code", Language="English",TotalPages=200},
-              
-            };
-        }
+     
     }
 }
