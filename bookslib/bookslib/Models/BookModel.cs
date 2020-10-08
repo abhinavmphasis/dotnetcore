@@ -25,7 +25,8 @@ namespace bookslib.Models
         [Required(ErrorMessage = "Please enter the language of your choice")]
 
         public int LanguageId { get; set; }
-       
+        public string  Language { get; set; }
+
         [Required(ErrorMessage = "Please enter the total pages of the book")]
         [Display(Name ="Total Pages of book")]
         public int? TotalPages { get; set; }    

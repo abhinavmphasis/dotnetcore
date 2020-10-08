@@ -24,12 +24,13 @@ namespace bookslib.Repository
                 Author = model.Author,
                 CreatedOn = DateTime.UtcNow,
                 Description = model.Description,
-                Title=model.Title,
-                LanguageId=model.LanguageId,
-                TotalPages=model.TotalPages.HasValue?model.TotalPages.Value:0,
-                UpdatedOn=DateTime.UtcNow
+                Title = model.Title,
+                LanguageId = model.LanguageId,
 
-        };
+                TotalPages = model.TotalPages.HasValue ? model.TotalPages.Value : 0,
+                UpdatedOn = DateTime.UtcNow
+
+            };
             await _context.Books.AddAsync(newBook);
             await _context.SaveChangesAsync();
             return newBook.Id;
@@ -41,7 +42,7 @@ namespace bookslib.Repository
             var allbooks = await _context.Books.ToListAsync();
             if (allbooks?.Any() == true)
             {
-                foreach(var book in allbooks)
+                foreach (var book in allbooks)
                 {
                     books.Add(new BookModel()
                     {
@@ -50,6 +51,7 @@ namespace bookslib.Repository
                         Description = book.Description,
                         Id = book.Id,
                         LanguageId = book.LanguageId,
+                        Language = book.Language.Name,
                         Title = book.Title,
                         TotalPages = book.TotalPages
                     });
@@ -60,25 +62,20 @@ namespace bookslib.Repository
 
         public async Task<BookModel> GetBookById(int id)
         {
-            var book = await _context.Books.FindAsync(id);
-
-            if (book!= null)
-            {
-                var bookdetails = new BookModel()
+            return await _context.Books.Where(x => x.Id == id)
+                .Select(book => new BookModel()
                 {
                     Author = book.Author,
                     Category = book.Category,
                     Description = book.Description,
                     Id = book.Id,
                     LanguageId = book.LanguageId,
+                    Language = book.Language.Name,
                     Title = book.Title,
                     TotalPages = book.TotalPages
-                };
-                return bookdetails;
+                }).FirstOrDefaultAsync();
 
-            }
-            return null;
-            //return DataSource().Where(x => x.Id == id).FirstOrDefault();
+
         }
 
         public List<BookModel> SearchBooks(string title, string author)
@@ -86,6 +83,6 @@ namespace bookslib.Repository
             return null;
         }
 
-     
+
     }
 }
