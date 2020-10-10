@@ -39,13 +39,11 @@ namespace bookslib.Controllers
             return _bookRepository.SearchBooks(bookName, authorName);
         }
 
-        public async Task<ViewResult> AddNewBook(bool isSuccees, int bookId = 0)
+        public async Task<ViewResult> AddNewBook(bool isSuccees =false, int bookId = 0)
         {
 
-            var model = new BookModel()
-            {
-           //     LanguageId = "2"
-            };
+            var model = new BookModel();
+       
 
             var languages =  new SelectList(await _languageRepository.GetLanguages(),"Id","Name");
 
@@ -65,7 +63,7 @@ namespace bookslib.Controllers
                     return RedirectToAction(nameof(AddNewBook), new { isSuccees = true, bookId = id });
                 }
             }
-            var languages = new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
+            ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
             return View();
         }
        
