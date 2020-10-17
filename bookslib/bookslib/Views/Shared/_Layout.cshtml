@@ -29,7 +29,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">
 
-                <img src="~/images/dp.JPG" width="30" height="30" asp-append-version="true "/>
+                <img src="~/images/dp.JPG" width="30" height="30" asp-append-version="true " />
                 Book Store
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,8 +54,8 @@
                         <a class="nav-link" asp-controller="book" asp-action="AddNewBook">Add New book</a>
                     </li>
                     @*<li class="nav-item">
-                        <a class="nav-link" asp-protocol="http" asp-host="lib.com" asp-controller="Book" asp-action="GetAllBooks">New Link</a>
-                    </li>*@
+                            <a class="nav-link" asp-protocol="http" asp-host="lib.com" asp-controller="Book" asp-action="GetAllBooks">New Link</a>
+                        </li>*@
 
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
@@ -74,14 +74,21 @@
     <footer class="border-top footer text-muted text-center">
         <div class="container">
             copyright &copy; Book Store @DateTime.Now.Year
-       
+
             <custom-email my-email="Abhinavkumar68@gmail.com"></custom-email>
         </div>
     </footer>
-    <script src="~/lib/jquery/jquery.js"></script>
+    <environment include="Development">
+        <script src="~/lib/jquery/jquery.js"></script>
+        <script src="~/jquery-validate/jquery.validate.js"></script>
+        <script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    </environment>
+
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     @RenderSection("scripts", required: false)
+
 
 </body>
 </html>

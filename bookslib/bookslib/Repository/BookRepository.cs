@@ -28,7 +28,8 @@ namespace bookslib.Repository
                 LanguageId = model.LanguageId,
 
                 TotalPages = model.TotalPages.HasValue ? model.TotalPages.Value : 0,
-                UpdatedOn = DateTime.UtcNow
+                UpdatedOn = DateTime.UtcNow,
+                coverImageUrl = model.CoverImageUrl
 
             };
             await _context.Books.AddAsync(newBook);
