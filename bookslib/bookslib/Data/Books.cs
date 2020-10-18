@@ -20,5 +20,7 @@ namespace bookslib.Data
 
         public Language Language { get; set; }
 
+        public ICollection<BookGallery> BookGallery { get; set; }
+
     }
 }

@@ -34,5 +34,14 @@ namespace bookslib.Models
         [Display(Name = "Please choose the cover page of your book")]
         public IFormFile  CoverPhoto { get; set; }
         public string  CoverImageUrl { get; set; }
+
+        [Required]
+        [Display(Name = "Please choose the images of your book")]
+        public IFormFileCollection GalleryFiles { get; set; }
+
+        public List<galleryModel> Gallery { get; set; }
+
+
+
     }
 }
