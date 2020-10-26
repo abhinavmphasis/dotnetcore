@@ -1,16 +1,8 @@
-﻿@{ 
-    ViewData["Title"] = "Home";
-}
-
+﻿@{ ViewData["Title"] = "Home"; }
+@inject bookslib.Repository.IBookRepository _bookrepository
 <section class="jumbotron text-center">
     <div class="container">
         <h1>Welcome to Bookstore</h1>
-        <environment names="Development">
-            <h3>Developement</h3>
-        </environment>
-        <environment names="Production">
-            <h3>P2roduction</h3>
-        </environment>
         <p class="lead text-muted">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -18,24 +10,17 @@
         <p>
             <a href="#" class="btn btn-primary my-2">Search books</a>
         </p>
+        @foreach(var item in await _bookrepository.GetAllBooks())
+        {
+            <h2>@item.Title</h2>
+        }
     </div>
 </section>
-@section breadcrum {
-   <nav aria-label="breadcrum">
-       <ol class="breadcrumb">
-           <li class="breadcrumb-item"><a href="#">Home</a></li>
-           <li class="breadcrumb-item"><a href="#">Page 1</a></li>
-           <li class="breadcrumb-item active" aria-current="page"><a href="#">Index</a></li>
 
-       </ol>
-   </nav>
-}
 
 <div class="py-5 bg-light">
     <div class="container">
         <h3 class="h3">Top books</h3>
-        <big> Top books</big>
-        <p big>Top books using attribute</p>
         @await Component.InvokeAsync("TopBooks", new { count = 3 })
 
         @*<vc:top-books count="6" ></vc:top-books>*@
@@ -43,10 +28,12 @@
     </div>
 </div>
 
-@section scripts {
+
+
+@section scripts{
     <script>
         $(document).ready(function () {
-            //    alert("document is ready");
+            //alert("document is ready");
         })
     </script>
 }

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace bookslib.Repository
 {
-    public class BookRepository
+    public class BookRepository : IBookRepository
     {
         private readonly BookStoreContext _context = null;
         public BookRepository(BookStoreContext context)
@@ -30,7 +30,8 @@ namespace bookslib.Repository
 
                 TotalPages = model.TotalPages.HasValue ? model.TotalPages.Value : 0,
                 UpdatedOn = DateTime.UtcNow,
-                coverImageUrl = model.CoverImageUrl
+                coverImageUrl = model.CoverImageUrl,
+                BookPdfUrl = model.BookPdfUrl
 
             };
 
@@ -42,7 +43,7 @@ namespace bookslib.Repository
                     Name = file.Name,
                     URL = file.URL
 
-                }) ;
+                });
             }
             await _context.Books.AddAsync(newBook);
             await _context.SaveChangesAsync();
@@ -51,27 +52,36 @@ namespace bookslib.Repository
         }
         public async Task<List<BookModel>> GetAllBooks()
         {
-            var books = new List<BookModel>();
-            var allbooks = await _context.Books.ToListAsync();
-            if (allbooks?.Any() == true)
-            {
-                foreach (var book in allbooks)
-                {
-                    books.Add(new BookModel()
-                    {
-                        Author = book.Author,
-                        Category = book.Category,
-                        Description = book.Description,
-                        Id = book.Id,
-                        LanguageId = book.LanguageId,
-                        Language = book.Language.Name,
-                        Title = book.Title,
-                        TotalPages = book.TotalPages
-                    });
-          
-                }
-            }
-            return books;
+            return await _context.Books
+                  .Select(book => new BookModel()
+                  {
+                      Author = book.Author,
+                      Category = book.Category,
+                      Description = book.Description,
+                      Id = book.Id,
+                      LanguageId = book.LanguageId,
+                      Language = book.Language.Name,
+                      Title = book.Title,
+                      TotalPages = book.TotalPages,
+                      CoverImageUrl = book.coverImageUrl
+                  }).ToListAsync();
+        }
+
+        public async Task<List<BookModel>> GetTopBooksAsync(int count)
+        {
+            return await _context.Books
+                  .Select(book => new BookModel()
+                  {
+                      Author = book.Author,
+                      Category = book.Category,
+                      Description = book.Description,
+                      Id = book.Id,
+                      LanguageId = book.LanguageId,
+                      Language = book.Language.Name,
+                      Title = book.Title,
+                      TotalPages = book.TotalPages,
+                      CoverImageUrl = book.coverImageUrl
+                  }).Take(count).ToListAsync();
         }
 
         public async Task<BookModel> GetBookById(int id)
@@ -88,11 +98,13 @@ namespace bookslib.Repository
                     Title = book.Title,
                     TotalPages = book.TotalPages,
                     CoverImageUrl = book.coverImageUrl,
-                    Gallery = book.BookGallery.Select(g=> new galleryModel() { 
-                    Id = g.Id,
-                    Name = g.Name,
-                    URL = g.URL
-                    }).ToList()
+                    Gallery = book.BookGallery.Select(g => new galleryModel()
+                    {
+                        Id = g.Id,
+                        Name = g.Name,
+                        URL = g.URL
+                    }).ToList(),
+                    BookPdfUrl = book.BookPdfUrl
                 }).FirstOrDefaultAsync();
 
 
@@ -103,6 +115,9 @@ namespace bookslib.Repository
             return null;
         }
 
+        public string GetAppName() {
+            return "Book store application";
+        }
 
     }
 }

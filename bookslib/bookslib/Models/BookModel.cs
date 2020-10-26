@@ -40,8 +40,9 @@ namespace bookslib.Models
         public IFormFileCollection GalleryFiles { get; set; }
 
         public List<galleryModel> Gallery { get; set; }
-
-
+        [Display(Name = "Upload your book in PDF format")]
+        public IFormFile BookPdf { get; set; }
+        public string BookPdfUrl { get; set; }
 
     }
 }

@@ -15,13 +15,13 @@ namespace bookslib.Controllers
 {
     public class BookController : Controller
     {
-        private readonly BookRepository _bookRepository = null;
-        private readonly LanguageRepository _languageRepository = null;
+        private readonly IBookRepository _bookRepository = null;
+        private readonly ILanguageRepository _languageRepository = null;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
 
-        public BookController(BookRepository bookRepository, 
-            LanguageRepository languageRepository,
+        public BookController(IBookRepository bookRepository, 
+            ILanguageRepository languageRepository,
             IWebHostEnvironment webHostEnvironment)
         {
             _bookRepository = bookRepository;
@@ -89,7 +89,12 @@ namespace bookslib.Controllers
                         bookModel.Gallery.Add(gallery);
                     }
 
-                    await UploadImage(folder, bookModel.CoverPhoto);
+                }
+                if (bookModel.BookPdf != null)
+                {
+                    string folder = "books/pdf/";
+                    bookModel.BookPdfUrl = await Uploadfile(folder, bookModel.CoverPhoto);
+                    //await UploadImage(folder, bookModel.CoverPhoto);
                 }
                 int id = await _bookRepository.AddNewBook(bookModel);
                 if (id > 0)
@@ -97,11 +102,19 @@ namespace bookslib.Controllers
                     return RedirectToAction(nameof(AddNewBook), new { isSuccees = true, bookId = id });
                 }
             }
+
             ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
             return View();
         }
 
         private async Task<string> UploadImage(string folderPath, IFormFile file)
+        {
+            folderPath += Guid.NewGuid().ToString() + "_" + file.FileName;
+            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folderPath);
+            await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+            return "/" + folderPath;
+        }
+        private async Task<string> Uploadfile(string folderPath, IFormFile file)
         {
             folderPath += Guid.NewGuid().ToString() + "_" + file.FileName;
             string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folderPath);
